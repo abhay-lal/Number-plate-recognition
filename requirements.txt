@@ -1,6 +1,6 @@
 imutils==0.5.4
 opencv-python-headless
 streamlit==0.73.0
-numpy==1.18.5
+numpy==1.21.0
 pillow
 pytesseract==0.3.8
