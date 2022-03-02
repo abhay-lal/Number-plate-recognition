@@ -3,6 +3,7 @@ import imutils
 from PIL import Image
 import streamlit as st
 import numpy as np
+import pytesseract
 #st.title('Licence plate number detection')
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
 base="light"
