@@ -3,7 +3,7 @@ import imutils
 from PIL import Image
 import streamlit as st
 import numpy as np
-import easyocr
+import pytesseract
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
 base="light"
 
@@ -50,16 +50,17 @@ def main():
             if len(approx) == 4: 
                 screenCnt = approx
                 x,y,w,h = cv2.boundingRect(c) 
-                new_img=image[y+5:y+h+5,x+5:x+w+5]
-                invert = cv2.bitwise_not(new_img)
+                new_img=image[y:y+h,x+3:x+w+3]
+                resized = cv2.resize(new_img,dsize=None,fx=4,fy=4)
+                invert = cv2.bitwise_not(resized)
                 gray_image1= cv2.cvtColor(invert,cv2.COLOR_BGR2GRAY)
                 gray_image1=cv2.equalizeHist(gray_image1)
                 threshold=cv2.threshold(gray_image1,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
                 #rem_noise=cv2.medianBlur(threshold,5)
                 #PyTesseract to convert text in the image to string
-                #plate = pytesseract.image_to_string(threshold, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8')
-                reader = easyocr.Reader(['en'])
-                plate = reader.readtext(threshold,paragraph="False")[0][1]
+                plate = pytesseract.image_to_string(threshold, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8')
+                #reader = easyocr.Reader(['en'],model_storage_directory='.')
+                #plate = reader.readtext(threshold,paragraph="False")[0][1]
                 if(plate==''):
                     plate="Error"
                 if(len(plate)>10): #Car number plate can not have more than 10 characters 
