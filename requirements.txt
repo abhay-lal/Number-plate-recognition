@@ -1,7 +1,6 @@
 imutils==0.5.4
 numpy==1.21.2
 opencv-python-headless
-libtesseract-dev
 Pillow==9.0.1
 pytesseract==0.3.8
 streamlit==1.4.0
