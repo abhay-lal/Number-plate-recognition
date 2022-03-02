@@ -4,4 +4,3 @@ opencv-python-headless
 Pillow==9.0.1
 pytesseract==0.3.8
 streamlit==1.4.0
-regex==2020.10.28
