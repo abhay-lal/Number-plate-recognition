@@ -1,10 +1,8 @@
 import cv2
 import imutils
-import pytesseract
 from PIL import Image
 import streamlit as st
 import numpy as np
-pytesseract.pytesseract.tesseract_cmd='/usr/local/lib/python3.7/site-packages/pytesseract/pytesseract.py'
 #st.title('Licence plate number detection')
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
 base="light"
