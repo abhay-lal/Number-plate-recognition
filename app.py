@@ -4,7 +4,7 @@ import pytesseract
 from PIL import Image
 import streamlit as st
 import numpy as np
-
+pytesseract.pytesseract.tesseract_cmd='/home/appuser/venv/lib/python3.7/site-packages/pytesseract/pytesseract.py'
 #st.title('Licence plate number detection')
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
 base="light"
@@ -59,7 +59,7 @@ def main():
                 threshold=cv2.threshold(gray_image1,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)[1]
                 #rem_noise=cv2.medianBlur(threshold,5)
                 #PyTesseract to convert text in the image to string
-                plate = pytesseract.image_to_string(threshold, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8 --oem 3')
+                plate = pytesseract.image_to_string(threshold, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8')
                 if(plate==''):
                     plate="Error"
                 if(len(plate)>10): #Car number plate can not have more than 10 characters 
