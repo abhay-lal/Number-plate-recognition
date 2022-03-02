@@ -1,6 +1,6 @@
+easyocr==1.4.1
 imutils==0.5.4
+numpy==1.21.2
 opencv-python-headless
-streamlit==0.73.0
-numpy==1.18.5
-pillow
-pytesseract==0.3.8
+Pillow==9.0.1
+streamlit==1.6.0
