@@ -30,6 +30,7 @@ def main():
         tfile = tempfile.NamedTemporaryFile(delete=False)
         tfile.write(Video.read())
         cap = cv2.VideoCapture(tfile.name)
+        stframe = st.empty()
         while(cap.isOpened()):
             ret,frame = cap.read()
             if ret==True :
@@ -57,6 +58,7 @@ def main():
                     if len(approx) == 4: 
                         screenCnt = approx
                         x,y,w,h = cv2.boundingRect(c) 
+                        frame=cv2.rectangle(image,(x+3,y),(x+w+3,y+h),(255, 0, 0),2)
                         new_img=image[y:y+h,x+3:x+w+3]
                         resized = cv2.resize(new_img,dsize=None,fx=4,fy=4)
                         invert = cv2.bitwise_not(resized)
@@ -75,16 +77,15 @@ def main():
                         else:
                             st.subheader("Number plate is : "+plate)  
                         break
-                cv2.drawContours(image,[screenCnt],-1,(0,255,0),2) 
-                stframe = st.empty()
-                while cap.isOpened():
-                    ret, frame = cap.read()
-                    # if frame is read correctly ret is True
-                    if not ret:
-                        print("Can't receive frame (stream end?). Exiting ...")
-                        break
-                    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-                    stframe.image(gray)
+                
+                
+                cv2.drawContours(image,[screenCnt],-1,(0,255,0),2)
+            if not ret:
+                print("Can't receive frame (stream end?). Exiting ...")
+                break 
+            stframe.image(frame)
+                
+                    
 
     
     if images is not None:
@@ -113,7 +114,7 @@ def main():
             approx = cv2.approxPolyDP(c, 0.018 * perimeter, True)
             if len(approx) == 4: 
                 screenCnt = approx
-                x,y,w,h = cv2.boundingRect(c) 
+                x,y,w,h = cv2.boundingRect(c)
                 new_img=image[y:y+h,x+3:x+w+3]
                 resized = cv2.resize(new_img,dsize=None,fx=4,fy=4)
                 invert = cv2.bitwise_not(resized)
