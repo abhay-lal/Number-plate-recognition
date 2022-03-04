@@ -6,22 +6,32 @@ import numpy as np
 import tempfile
 import pytesseract
 import tempfile
-st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
-base="light"
+from zmq import NULL
 
+def header():
+    st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
+    st.markdown("![gif](https://cdn.discordapp.com/attachments/945603582462398464/948294399689912330/car-on-the-road-4851957-404227-unscreen.gif)")
+    
 def load_image(image_file):
     img = Image.open(image_file)
     return img
 
-def words():
+def footer():
+    st.subheader('About:')
     st.markdown('In this Deep Learning Application, we have used OpenCv to detect the Licence plate in an image and give the converted string.\
-    We have used the Pytesseract Library to perform OCR on the image.')
-    
-def main():
-    st.markdown("![gif](https://cdn.discordapp.com/attachments/945603582462398464/948294399689912330/car-on-the-road-4851957-404227-unscreen.gif)")
+    The pre processing of each frame or image is done using grayscale,canny-edge,invert and histogram equalization.\
+    We have used the Pytesseract Library to perform OCR on the detected frame of licence plate.This then gives us the Licence Number Plate.')
+    st.subheader('Techstack:')
+    st.markdown('1)OpenCV: Helps with basic image processing not 100% accurate')
+    st.markdown('2)PyTesseract: It is an Optical Character Recognising Problem (OCR). Therefore ,the Tesseract-OCR engine(pytesseract is the python implementation) helps in converting image to text.')
+    st.markdown('3)Streamlit: Used to create web application for deployment and front end.')
+    st.subheader('Conclusion:')
+    st.markdown('There is an immediate need of such kind of Automatic Number Plate Recognition system in India as there are problems of traffic, stolen cars etc.\
+    The Government should take some interest in developing this system as it is very economical and eco-friendly, if applied effectively.\
+    This change will help in the progress of the nation.')
+def video():
     #st.subheader('Choose a photo')
-    images = st.file_uploader('',type=['jpeg','png', 'jpg'])
-    Video = st.file_uploader('',type=['mp4','mov'])
+    Video = st.file_uploader('',type=['mp4'])
     #st.image(load_image(images))
     #Function to read the image  
     #image = cv2.imread(image) 
@@ -31,11 +41,15 @@ def main():
         tfile.write(Video.read())
         cap = cv2.VideoCapture(tfile.name)
         stframe = st.empty()
+        i=0
         while(cap.isOpened()):
             ret,frame = cap.read()
-            if ret==True :
+            i=i+1
+            if ret==True and i%285==0:
+                st.spinner("Please wait")
                 image = imutils.resize(frame,height=620,width=480)
             #Convert BGR image to GRAYSCALE
+                image1=image.copy()
                 gray_image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
                 #Canny edge detection to detect edges in an image 
                 edged=cv2.Canny(gray_image,30,200)
@@ -44,13 +58,13 @@ def main():
                 #First:: It take all the contours but doesn't create parent-child relationship
                 #Second:: It specify to take corner points off the counter
                 cnts,new = cv2.findContours(edged.copy(),cv2.RETR_LIST,cv2.CHAIN_APPROX_SIMPLE)   
-                image1=image.copy()
                 #This function is used to create counters based to given counter cordinates
+                if (cnts==NULL):
+                    continue
                 cv2.drawContours(image1,cnts,-1,(0,255,0),3)
                 #Here we are sorting the conters and neglecting all the conters whose area is less than 20
                 cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:20]
                 screenCnt = None
-                image2 = image.copy()
                 for c in cnts:
                     #To determine sqaure cure among the identified contours
                     perimeter = cv2.arcLength(c,True)
@@ -73,9 +87,13 @@ def main():
                         if(plate==''):
                             plate="Error"
                         if(len(plate)>10): #Car number plate can not have more than 10 characters 
-                            st.subheader("Number plate is : "+plate[:13])  
+                            st.subheader("Number plate is : "+plate[:13])
+                            st.balloons() 
+                            break 
                         else:
-                            st.subheader("Number plate is : "+plate)  
+                            st.subheader("Number plate is : "+plate) 
+                            st.balloons() 
+                            break
                         break
                 
                 
@@ -84,10 +102,10 @@ def main():
                 print("Can't receive frame (stream end?). Exiting ...")
                 break 
             stframe.image(frame)
-                
-                    
+                            
 
-    
+def image():
+    images = st.file_uploader('',type=['jpeg','png', 'jpg'])   
     if images is not None:
         file_bytes = np.asarray(bytearray(images.read()), dtype=np.uint8)
         image=cv2.imdecode(file_bytes,1)
@@ -124,24 +142,21 @@ def main():
                 #rem_noise=cv2.medianBlur(threshold,5)
                 #PyTesseract to convert text in the image to string
                 plate = pytesseract.image_to_string(threshold, config='-c tessedit_char_whitelist=0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ --psm 8')
-                #reader = easyocr.Reader(['en'],model_storage_directory='.')
-                #plate = reader.readtext(threshold,paragraph="False")[0][1]
                 if(plate==''):
                     plate="Error"
                 if(len(plate)>10): #Car number plate can not have more than 10 characters 
-                    st.subheader("Number plate is : "+plate[:13])  
+                    st.subheader("Number plate detected is : "+plate[:13])  
+                    #st.balloons()
                 else:
-                    st.subheader("Number plate is : "+plate)  
-                break
+                    st.subheader("Number plate detected is : "+plate)  
+                    #st.balloons
+                break       
         cv2.drawContours(image,[screenCnt],-1,(0,255,0),2) 
-        stack=[gray_image,edged]
-        stack1=[invert,gray_image1,threshold]
         col1, col2= st.columns(2)
         with col1:
             st.image(gray_image,caption='Gray-scale image',width=300)
         with col2:
             st.image(edged,caption='Canny Edge',width=300)
-        
         col1, col2, col3= st.columns(3)
         with col1:
             st.image(invert,caption='Inverted B & W',width=150)
@@ -149,9 +164,18 @@ def main():
             st.image(gray_image1,caption='Grayscale Image',width=150)
         with col3:
             st.image(threshold,caption='Threshold Image',width=150)    
+            
         
-        words()
-        
+def main():
+    header()
+    add_selectbox = st.sidebar.selectbox(
+    "What do you want to upload?",
+    ("Image", "Video"))
+    if add_selectbox=='Image':
+        image()
+    if add_selectbox=='Video':
+        video()
+    footer()
         
 if __name__ == '__main__':
     main()
