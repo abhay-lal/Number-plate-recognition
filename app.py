@@ -4,6 +4,7 @@ from PIL import Image
 import streamlit as st
 import numpy as np
 import pytesseract
+import tempfile
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
 base="light"
 
@@ -19,13 +20,15 @@ def main():
     st.markdown("![gif](https://cdn.discordapp.com/attachments/945603582462398464/948294399689912330/car-on-the-road-4851957-404227-unscreen.gif)")
     #st.subheader('Choose a photo')
     images = st.file_uploader('',type=['jpeg','png', 'jpg'])
+    Video = st.file_uploader('',type=['mp4','mov'])
     #st.image(load_image(images))
     #Function to read the image  
     #image = cv2.imread(image) 
     # Function to resize the image  
-    
     if Video is not None:
-        cap = cv2.VideoCapture("Video_path")
+        tfile = tempfile.NamedTemporaryFile(delete=False)
+        tfile.write(Video.read())
+        cap = cv2.VideoCapture(tfile.name)
         while(cap.isOpened()):
             ret,frame = cap.read()
             if ret==True :
@@ -72,6 +75,15 @@ def main():
                             st.subheader("Number plate is : "+plate)  
                         break
                 cv2.drawContours(image,[screenCnt],-1,(0,255,0),2) 
+                stframe = st.empty()
+                while cap.isOpened():
+                    ret, frame = cap.read()
+                    # if frame is read correctly ret is True
+                    if not ret:
+                        print("Can't receive frame (stream end?). Exiting ...")
+                        break
+                    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                    stframe.image(gray)
 
 
 
