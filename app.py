@@ -3,6 +3,7 @@ import imutils
 from PIL import Image
 import streamlit as st
 import numpy as np
+import tempfile
 import pytesseract
 import tempfile
 st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
@@ -84,8 +85,6 @@ def main():
                         break
                     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
                     stframe.image(gray)
-
-
 
     
     if images is not None:
