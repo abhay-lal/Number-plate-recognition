@@ -1,9 +1,10 @@
 # Number-plate-recognition
 Number Plate recognition, also called License Plate recognition using image processing methods is a potential research area in smart cities and the Internet of Things. An exponential increase in the number of vehicles necessitates the use of automated systems to maintain vehicle information for various purposes.
 
-![Front Page](Assets\Front Page.png)
-![Input Image](Assets\Input.jpg)
-![Output Screen](Assets\Front Page.png)
+![Front Page](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Front%20Page.png)
+![Input Image](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Input.jpg)
+![Output Screen](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Output.png)
+
 ## Instructions to run
 ### Prerequisites
 The project code utilizes the following library:
