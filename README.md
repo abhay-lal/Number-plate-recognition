@@ -22,10 +22,21 @@ The project code utilizes the following library:
 2.  **Videos** ---> Contains a video to try on
 3.  **app.py** ---> This contain all the python code for detection of license plate
 
-### To run the program :
-1.  Open Number Plate Recognition folder in VS code or any code editor 
-2.  In terminal type 
-```streamlit run app.py```
+## Instructions to run
+* To install Streamlit and other dependencies, use the given pip command.
+```bash
+pip install -r requirements.txt
+```
+
+```bash
+pip install -r packages.txt
+```
+
+Running Streamlit scripts is incredibly easy. All you need to do is enter the following line in your terminal.
+
+```bash
+streamlit run app.py
+```
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
 
