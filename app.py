@@ -8,6 +8,9 @@ import pytesseract
 import tempfile
 from zmq import NULL
 
+
+
+
 def header():
     st.markdown("<h1 style='text-align: center; color: white;'>Licence plate number detection</h1>", unsafe_allow_html=True)
     st.markdown("![gif](https://cdn.discordapp.com/attachments/945603582462398464/948294399689912330/car-on-the-road-4851957-404227-unscreen.gif)")
@@ -72,7 +75,7 @@ def video():
                     if len(approx) == 4: 
                         screenCnt = approx
                         x,y,w,h = cv2.boundingRect(c) 
-                        frame=cv2.rectangle(image,(x+3,y),(x+w+3,y+h),(255, 0, 0),2)
+                        frame=cv2.rectangle(image,(x,y),(x+w,y+h),(255, 0, 0),2)
                         new_img=image[y:y+h,x+3:x+w+3]
                         resized = cv2.resize(new_img,dsize=None,fx=4,fy=4)
                         invert = cv2.bitwise_not(resized)
@@ -133,7 +136,7 @@ def image():
             if len(approx) == 4: 
                 screenCnt = approx
                 x,y,w,h = cv2.boundingRect(c)
-                new_img=image[y:y+h,x+3:x+w+3]
+                new_img=image[y:y+h,x:x+w]
                 resized = cv2.resize(new_img,dsize=None,fx=4,fy=4)
                 invert = cv2.bitwise_not(resized)
                 gray_image1= cv2.cvtColor(invert,cv2.COLOR_BGR2GRAY)
