@@ -26,6 +26,8 @@ The project code utilizes the following library:
 1.  Open Number Plate Recognition folder in VS code or any code editor 
 2.  In terminal type 
 ```streamlit run app.py```
+## License
+Distributed under the MIT License. See `LICENSE` for more information.
 
 ## :technologist: Project Created & Maintained By -
 1.  **ADITYA AGRAWAL**
