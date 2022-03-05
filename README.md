@@ -1,12 +1,19 @@
-# Number-plate-recognition
+# Number-plate-recognition :car:
 Number Plate recognition, also called License Plate recognition using image processing methods is a potential research area in smart cities and the Internet of Things. An exponential increase in the number of vehicles necessitates the use of automated systems to maintain vehicle information for various purposes.
+
 
 ![Front Page](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Front%20Page.png)
 ![Input Image](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Input.jpg)
 ![Output Screen](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Output.png)
 
-## Instructions to run
-### Prerequisites
+## Functionalities
+
+![Flow Diagram](https://github.com/abhay-lal/Number-plate-recognition/blob/master/Assets/Flow.jpg)
+
+* It detect the number plate in a given image or video 
+* Identifies the text in the detected number plate
+
+### Prerequisites 
 The project code utilizes the following library:
 *    Python 
 *    OpenCV  
@@ -32,11 +39,20 @@ pip install -r requirements.txt
 pip install -r packages.txt
 ```
 
-Running Streamlit scripts is incredibly easy. All you need to do is enter the following line in your terminal.
+* Running Streamlit scripts is incredibly easy. All you need to do is enter the following line in your terminal.
 
 ```bash
 streamlit run app.py
 ```
+## Application
+* Parking
+* Access Control
+* Tolling
+* Border Control
+* Stolen Cars
+* Traffic Control
+
+
 ## License
 Distributed under the MIT License. See `LICENSE` for more information.
 
