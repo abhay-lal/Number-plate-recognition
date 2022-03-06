@@ -8,6 +8,7 @@ import pytesseract
 import tempfile
 from zmq import NULL
 
+pytesseract.pytesseract.tesseract_cmd ='tesseract'
 
 
 
