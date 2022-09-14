@@ -60,4 +60,3 @@ Distributed under the MIT License. See `LICENSE` for more information.
 ## :technologist: Project Created & Maintained By -
 1.  **ADITYA AGRAWAL**
 2.  **ABHAY LAL**
-3.  **JOEL SUNNY**
